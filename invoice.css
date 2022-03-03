@@ -1,0 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.invoice_form1{
+    display: flex;
+    margin-top: 8rem;
+    font-size: 22px;
+    font-weight: bold;
+}
+.invoice_form2{
+    display: flex;
+    margin-top: 1rem;
+    font-size: 21px;
+    font-weight: bold;
+}
+input{
+    width: 14rem;
+    border: 1px solid gray;
+    background-color: rgb(220, 220, 220);
+    border-radius: 0.5rem
+}

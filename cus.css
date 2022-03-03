@@ -1,0 +1,49 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.first_line{
+    display: flex;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 3rem;
+    margin-left: 25rem;
+    font-size: 13px;
+}
+
+.sec_line{
+    display: flex;
+    letter-spacing: 1px;;
+    text-align: center;
+    align-items: center;
+    font-weight: bold;
+    margin-left: 33rem;
+    font-size: 13px;
+}
+.third_line{
+    display: flex;
+    letter-spacing: 1px;;
+    text-align: center;
+    font-weight: bold;
+    margin-left: 35rem;
+    font-size: 13px;
+}
+
+.form1{
+    margin-top: 1rem;
+    margin-left: 30rem;;
+    font-size: 20;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+}
+label{
+    font-family: Arial, Helvetica, sans-serif;
+    width: 10rem;
+}
+input{
+    background-color: lightgray;
+    border: 1px solid grey;
+}
+h1{
+    margin-left: 28rem;
+}
