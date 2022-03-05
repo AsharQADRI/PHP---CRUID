@@ -48,7 +48,7 @@
 		        </tr>
                 <?php
     if(isset($_POST["Select"])){
-        $Name = $_POST["Name"];
+        $Name = $_POST["cName"];
         $Email = $_POST["Email"];
         $Phone = $_POST["Phone"];
         $id = $_POST["id"];
@@ -73,7 +73,7 @@ while($row=mysqli_fetch_array($result))
 {
 ?>
 <tr> <td><?php echo $row['id']; ?></td>
-<td><?php echo $row['Name']; ?></td>
+<td><?php echo $row['cName']; ?></td>
 <td><?php echo $row['Email']; ?></td>
 <td><?php echo $row['Phone']; ?></td><div class="container mt-3">
 <td> <a href="invoice.php?id=<?php echo $row['id']; ?>"id="m_select"    class="btn" name="Select" value="id">Select</td></a>
@@ -99,9 +99,10 @@ if(isset($_GET["id"])){
 <form class="form-control" action="invoice.php" method="POST">
 <input  type="hidden" name="id" id="id" value="<?php echo $row['id']; ?>" class="form-control">
             <label for="">Customer Name</label>
-            <input type="text" name="Name"  value="<?php echo $row['Name']; ?>">
+            <input type="text" name="cName" value="<?php echo $row['cName']; ?>">
             <label >Customer Phone</label>
             <input type="text" name="Phone" id="" value="<?php echo $row['Phone'];?>">
+
 
 <p>_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________</p>
             <!-- Button trigger modal -->
@@ -169,46 +170,26 @@ if(isset($_GET["id"])){
 <input type="text" name="Name" id=""  value="<?php echo $rows['Name']; ?>">
 <label >Item Price</label>
 <input type="text" name="price" id="" value="<?php echo $rows['price'];?>">
-
+<br>
+<br>
 <button type="submit" id="bt1" style="width: 9rem;" class="btn btn-success" name="add_s">Add</button>
 </form>
 <br>
 <br>
 <?php
-
-if(isset($_POST['add_s'])){
-
-
-  $id = $_POST['id'];
-  $cusname = $_POST['Name'];
-  $cusphone = $_POST['Phone'];
-
-
-          $sql = "INSERT INTO `invoicecusdb`(`id`, `Cusname`, `Cusphone`) VALUES ('".$id."', '".$cusname."', '".$cusphone."')";
-        $result = mysqli_query($con,$sql);
-
-                  $id = $_POST['id'];
-                  $itemcode = $_POST['itemcode'];
-                $Name = $_POST['Name'];
-                $price = $_POST['price'];
-     
-          $sql = "INSERT INTO `invodb`(`id`, `itemcode`, `Name`, `price`) VALUES('".$id."', '".$itemcode."', '".$Name."', '".$price."')";
-        $result = mysqli_query($con,$sql);
-
-         echo "<script>window.location='invoice.php?ash&id=".$id."';</script>";
-}
-
-                  ?>
+                 ?>
           <?php
 if(isset($_POST['add_s'])){
 
-  $itemCode = $_POST['itemCode'];
-$name = $_POST['Name'];
-$price = $_POST['price']; 
+$id = $_POST['id'];
+$itemcode = $_POST['itemcode'];
+$Name = $_POST['Name'];
+$price = $_POST['price'];
+$cName = $_POST['cName'];
+$Phone = $_POST['Phone']; 
 
-          $sql = "INSERT INTO `invoice`(`itemCode`, `Name`, `price`, `msid`) VALUES ('".$itemCode."', '".$name."', '".$price."',  '".$id."')";
+        $sql = "INSERT INTO `invodb`(`id`, `itemcode`, `Name`, `price`, `Cusname`, `Cusphone`) VALUES (  '".$id."','".$itemcode."', '".$Name."', '".$price."', '".$cName."', '".$Phone."')";
         $result = mysqli_query($con,$sql) or die("erorr 129".mysqli_error($con));
-
   echo "<script>window.location='invoice.php?ash&id=".$id."';</script>";
                 }
 
@@ -222,13 +203,16 @@ $price = $_POST['price'];
               </tr>
                       <th> ID </th>
 			                <th> Item Code </th>
-			                <th>Item Name </th>
+			                <th> Item Name </th>
 			                <th> Price </th>
+			                <th> Customer Name </th>
+			                <th> Customer Phone </th>
+                      <th> Action </th>
 		        </tr>
 	
 <?php
 
-$sql = "SELECT *FROM `invodb` Where  id = '".$_GET['id']."' ";
+$sql = "SELECT *FROM `invodb`  ";
 $rest = mysqli_query($con,$sql);
          while($row = mysqli_fetch_array($rest)){
 		?>
@@ -237,20 +221,33 @@ $rest = mysqli_query($con,$sql);
     <td><?php echo $row['itemcode']; ?></td>
 		<td><?php echo $row['Name']; ?></td>
 		<td><?php echo $row['price']; ?></td>
+		<td><?php echo $row['Name']; ?></td>
+		<td><?php echo $row['Cusphone']; ?></td>
+    <td><a class="btn btn-success" title="Print" target="_blank" href="print.php?&id=<?php echo $row["id"]; ?>"><i class="fa fa-print" aria-hidden="true"></i></a></td>  
+    <td><a class="btn btn-danger" title="delete" target="_blank" href="invoice.php?del&del_id=<?php echo $rows['id']; ?>"><i class="fa fa-trash" aria-hidden="true"></i></a></td>  
   </tr>
      <?php
      }
 
-$sql = "SELECT *FROM `invoicecusdb` ";
-$result = mysqli_query($con,$sql);
-         while($row = mysqli_fetch_array($result))
+     if(isset($_GET["del"])){
+      $id = $_GET["del_id"];
+  
+      $query = "DELETE FROM `invodb` WHERE id = '$id'";
+      $responseOfDelete = mysqli_query($con,$query);
+      
+  
+    }
+
+// $sql = "SELECT *FROM `invoicecusdb` ";
+// $result = mysqli_query($con,$sql);
+//          while($row = mysqli_fetch_array($result))
           ?>
 <center>
   <br>
   <br>
-<td> <a href="invoice.php?list" id="List"   class="btn btn-success" name="Name" value="id">List</td></a>
+<td> <a href="invoice.php?list" id="List"   class="btn btn-success" name="Name" value="id">List</i></td></a>
         <td> <a href=".php" id="Save"   class="btn btn-primary" name="Save" value="id">Save</td></a>
         <td>  <a href="invoice.php" id="Exit"  class="btn btn-danger" type="delete" name="Exit" >Exit</td></a>
-        </center>
+      </center>
 </body>
 </html>
